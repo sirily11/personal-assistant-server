@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  mongo1:
+    image: mongo:7.0
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    ports:
+      - 27017:27017
+    volumes:
+      - "mongo1_data:/data/db"
+      - "mongo1_config:/data/configdb"
+volumes:
+  mongo1_data:
+  mongo1_config:
