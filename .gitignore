@@ -2,3 +2,5 @@
 ijhttp
 *.zip
 config.yaml
+mock_*
+wire_gen.go
