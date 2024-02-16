@@ -1,4 +1,4 @@
-module sme-demo
+module personal-assistant
 
 go 1.21.5
 

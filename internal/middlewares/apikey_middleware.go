@@ -3,7 +3,7 @@ package middlewares
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"sme-demo/internal/config/constants/environments"
+	"personal-assistant/internal/config/constants/environments"
 )
 
 // APIKeyMiddleware is responsible for validating the JWT token sent in the header of the request from

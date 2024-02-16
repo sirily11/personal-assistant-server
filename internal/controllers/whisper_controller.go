@@ -3,8 +3,8 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	. "sme-demo/internal/repositories/model/whisper"
-	. "sme-demo/internal/services"
+	. "personal-assistant/internal/repositories/model/whisper"
+	. "personal-assistant/internal/services"
 )
 
 type WhisperController struct {

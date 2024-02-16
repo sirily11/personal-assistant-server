@@ -6,8 +6,8 @@ import (
 	"github.com/google/logger"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
-	"sme-demo/internal/config/constants/keys"
-	dto "sme-demo/internal/dto/authentication"
+	"personal-assistant/internal/config/constants/keys"
+	dto "personal-assistant/internal/dto/authentication"
 )
 
 type User[T dto.SignUpUserDtoCredentialData] struct {

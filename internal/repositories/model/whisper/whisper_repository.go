@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"sme-demo/internal/config/constants/keys"
+	"personal-assistant/internal/config/constants/keys"
 )
 
 type WhisperModel struct {

@@ -5,7 +5,7 @@ import (
 	"github.com/google/logger"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"sme-demo/internal/config/constants/environments"
+	"personal-assistant/internal/config/constants/environments"
 )
 
 type Database struct {
