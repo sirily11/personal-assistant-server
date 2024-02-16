@@ -15,9 +15,17 @@ type Storage struct {
 }
 
 type S3 struct {
+	Whisper S3Whisper `mapstructure:"whisper"`
+	General S3General `mapstructure:"general"`
+}
+
+type S3General struct {
+	Region string `mapstructure:"region"`
+	Bucket string `mapstructure:"bucket"`
+}
+
+type S3Whisper struct {
 	// ModelUploadPrefix is the prefix for the model upload path.
 	// For example, if the prefix is "models", the model will be uploaded to "s3://bucket/models"
-	ModelUploadPrefix string `mapstructure:"modelUploadPath"`
-	Region            string `mapstructure:"region"`
-	Bucket            string `mapstructure:"bucket"`
+	ModelUploadPrefix string `mapstructure:"model_upload_prefix"`
 }

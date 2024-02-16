@@ -9,6 +9,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
+RUN go install github.com/google/wire/cmd/wire@latest && wire ./internal/wire/wire.go
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o app .
 
 # use the scratch image for the smallest possible image size
