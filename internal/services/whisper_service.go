@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	. "sme-demo/internal/repositories/model/whisper"
 	"sme-demo/pkgs"
 )
@@ -25,7 +26,12 @@ func NewWhisperModelService(repo WhisperRepositoryInterface, s3PreSigner pkgs.S3
 	}
 }
 
+// Create a new whisper model. Will create a pre signed url for each file in the whisper model if the url is empty
 func (s *WhisperModelService) Create(whisper WhisperModel) (*WhisperModel, error) {
+	if len(whisper.FileUrl) == 0 {
+		return nil, fmt.Errorf("file url is required and should not be empty")
+	}
+
 	for i, file := range whisper.FileUrl {
 		// generate pre signed url only if url is empty
 		if len(file.Url) != 0 {

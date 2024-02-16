@@ -30,12 +30,19 @@ func (suite *TestSuite) TearDownTest() {
 
 func (suite *TestSuite) TestCreateWithoutFileToUpload() {
 	repo := whisper_repository.NewMockWhisperRepositoryInterface(suite.ctrl)
-	repo.EXPECT().Create(whisper_repository.WhisperModel{}).Return(&whisper_repository.WhisperModel{}, nil)
+	repo.EXPECT().Create(gomock.Any()).Return(&whisper_repository.WhisperModel{}, nil)
 
 	signer := pkgs.NewMockS3PreSignerInterface(suite.ctrl)
 
 	service := NewWhisperModelService(repo, signer)
-	_, err := service.Create(whisper_repository.WhisperModel{})
+	_, err := service.Create(whisper_repository.WhisperModel{
+		FileUrl: []whisper_repository.ModelFile{
+			{
+				Name: "file",
+				Url:  "url",
+			},
+		},
+	})
 
 	assert.Nil(suite.T(), err)
 }

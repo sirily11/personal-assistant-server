@@ -4,3 +4,4 @@ ijhttp
 config.yaml
 mock_*
 wire_gen.go
+.env

@@ -37,14 +37,14 @@ func NewS3PreSigner(systemConfig config.Config) S3PreSignerInterface {
 
 // GetPreSignedURLForUpload returns a preSigned URL for uploading an object to S3
 func (s *S3PreSigner) GetPreSignedURLForUpload(name string) (string, error) {
-	key, err := url.JoinPath(s.systemConfig.Storage.S3.ModelUploadPrefix, name)
+	key, err := url.JoinPath(s.systemConfig.Storage.S3.Whisper.ModelUploadPrefix, name)
 	if err != nil {
 		return "", err
 	}
 	obj, err := s.PreSigner.PresignPutObject(
 		context.TODO(),
 		&s3.PutObjectInput{
-			Bucket: aws.String(s.systemConfig.Storage.S3.Bucket),
+			Bucket: aws.String(s.systemConfig.Storage.S3.General.Bucket),
 			Key:    aws.String(key),
 		},
 	)
