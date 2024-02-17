@@ -2,10 +2,12 @@ package whisper_repository
 
 import (
 	"context"
+	"github.com/google/logger"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"personal-assistant/internal/config/constants/keys"
+	"personal-assistant/internal/repositories"
 )
 
 type WhisperModel struct {
@@ -34,6 +36,22 @@ type WhisperRepository struct {
 }
 
 func NewWhisperRepository(db *mongo.Database) WhisperRepositoryInterface {
+	collection := db.Collection(keys.WhisperModelKey)
+	logger.Infof("Created index for whisper collection")
+	// create index for the collection
+	_, err := collection.Indexes().CreateOne(
+		context.TODO(),
+		mongo.IndexModel{
+			Keys: bson.D{
+				{Key: "name", Value: repositories.IndexSortingDescending},
+			},
+		},
+	)
+
+	if err != nil {
+		logger.Fatal("Error creating index for whisper collection: ", err)
+	}
+
 	return &WhisperRepository{
 		whisperCollection: db.Collection(keys.WhisperModelKey),
 	}
