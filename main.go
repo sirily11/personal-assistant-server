@@ -1,11 +1,12 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	"io"
 	"log"
-	"sme-demo/internal/config"
-	"sme-demo/internal/repositories"
-	"sme-demo/internal/router"
+	"personal-assistant/internal/config"
+	"personal-assistant/internal/repositories"
+	"personal-assistant/internal/router"
 
 	"github.com/google/logger"
 	"github.com/spf13/viper"
@@ -18,14 +19,11 @@ func readConfigFromFile() (*config.Config, error) {
 	viper.SetConfigType("yaml")
 	viper.AutomaticEnv()
 
-	viper.AddConfigPath("/etc/sme-demo/")
+	viper.AddConfigPath("/etc/personal-assistant/")
 	viper.AddConfigPath("$HOME/.sme-demo")
 	viper.AddConfigPath(".")
 
 	err := viper.ReadInConfig()
-	if err != nil {
-		return nil, err
-	}
 
 	var readConfig config.Config
 	err = viper.Unmarshal(&readConfig)
@@ -49,6 +47,15 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if readConfig.Mode == config.StartupDevelopment {
+		logger.Info("Running in development mode")
+		gin.SetMode(gin.DebugMode)
+	} else {
+		logger.Info("Running in production mode")
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	route := router.Router(*readConfig)
 
 	err = route.Run()

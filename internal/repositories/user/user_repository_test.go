@@ -8,9 +8,9 @@ import (
 	"github.com/tryvium-travels/memongo"
 	"go.mongodb.org/mongo-driver/mongo"
 	"io"
-	"sme-demo/internal/config/constants/keys"
-	dto "sme-demo/internal/dto/authentication"
-	"sme-demo/internal/repositories"
+	"personal-assistant/internal/config/constants/keys"
+	dto "personal-assistant/internal/dto/authentication"
+	"personal-assistant/internal/repositories"
 	"testing"
 )
 

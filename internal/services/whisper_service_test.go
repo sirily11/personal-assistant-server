@@ -8,10 +8,10 @@ import (
 	"github.com/tryvium-travels/memongo"
 	"go.uber.org/mock/gomock"
 	"io"
-	"sme-demo/internal/config/constants/keys"
-	"sme-demo/internal/repositories"
-	whisper_repository "sme-demo/internal/repositories/model/whisper"
-	"sme-demo/pkgs"
+	"personal-assistant/internal/config/constants/keys"
+	"personal-assistant/internal/repositories"
+	whisper_repository "personal-assistant/internal/repositories/model/whisper"
+	"personal-assistant/pkgs"
 	"testing"
 )
 

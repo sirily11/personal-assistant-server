@@ -8,8 +8,8 @@ import (
 	"github.com/tryvium-travels/memongo"
 	"go.mongodb.org/mongo-driver/mongo"
 	"io"
-	"sme-demo/internal/config/constants/keys"
-	"sme-demo/internal/repositories"
+	"personal-assistant/internal/config/constants/keys"
+	"personal-assistant/internal/repositories"
 	"testing"
 )
 

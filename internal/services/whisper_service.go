@@ -2,8 +2,8 @@ package services
 
 import (
 	"fmt"
-	. "sme-demo/internal/repositories/model/whisper"
-	"sme-demo/pkgs"
+	. "personal-assistant/internal/repositories/model/whisper"
+	"personal-assistant/pkgs"
 )
 
 type WhisperModelServiceInterface interface {

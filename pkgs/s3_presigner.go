@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/google/logger"
 	"net/url"
-	"sme-demo/internal/config"
+	"personal-assistant/internal/config"
 )
 
 type S3PreSignerInterface interface {

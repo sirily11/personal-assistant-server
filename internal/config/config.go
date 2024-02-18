@@ -6,8 +6,16 @@ const (
 	ConditionFalse = "false"
 )
 
+type StartupMode string
+
+const (
+	StartupDevelopment StartupMode = "development"
+	StartupProduction  StartupMode = "production"
+)
+
 type Config struct {
-	Storage Storage `mapstructure:"storage"`
+	Storage Storage     `mapstructure:"storage"`
+	Mode    StartupMode `mapstructure:"mode"`
 }
 
 type Storage struct {

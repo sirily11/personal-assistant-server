@@ -4,10 +4,10 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"sme-demo/internal/config"
-	"sme-demo/internal/middlewares"
-	"sme-demo/internal/repositories"
-	"sme-demo/internal/wire"
+	"personal-assistant/internal/config"
+	"personal-assistant/internal/middlewares"
+	"personal-assistant/internal/repositories"
+	"personal-assistant/internal/wire"
 )
 
 func Router(cfg config.Config) *gin.Engine {

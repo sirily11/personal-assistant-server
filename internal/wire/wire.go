@@ -9,11 +9,11 @@ package wire
 import (
 	"github.com/google/wire"
 	"go.mongodb.org/mongo-driver/mongo"
-	"sme-demo/internal/config"
-	"sme-demo/internal/controllers"
-	whisper_repository "sme-demo/internal/repositories/model/whisper"
-	"sme-demo/internal/services"
-	"sme-demo/pkgs"
+	"personal-assistant/internal/config"
+	"personal-assistant/internal/controllers"
+	whisper_repository "personal-assistant/internal/repositories/model/whisper"
+	"personal-assistant/internal/services"
+	"personal-assistant/pkgs"
 )
 
 func InitializeWhisperController(config config.Config, db *mongo.Database) *controllers.WhisperController {
