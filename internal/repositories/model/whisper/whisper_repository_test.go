@@ -10,6 +10,7 @@ import (
 	"io"
 	"personal-assistant/internal/config/constants/keys"
 	"personal-assistant/internal/repositories"
+	"personal-assistant/pkgs/errors"
 	"testing"
 )
 
@@ -19,6 +20,9 @@ type RepositoryTestSuite struct {
 	db     *mongo.Database
 	server *memongo.Server
 }
+
+// idNotExist is a random id that does not exist in the database
+const idNotExist = "ffffffffff1f828c5c18bac1"
 
 func (suite *RepositoryTestSuite) SetupTest() {
 	logger.Init("Logger", true, false, io.Discard)
@@ -122,6 +126,12 @@ func (suite *RepositoryTestSuite) TestGetByIdWhisperModel() {
 	assert.NotEmpty(suite.T(), get.Id)
 }
 
+func (suite *RepositoryTestSuite) TestGetByIdWhisperModelNotExist() {
+	get, err := suite.repo.GetById(idNotExist)
+	assert.Nil(suite.T(), get)
+	assert.Equal(suite.T(), err.(*errors.DocumentNotFound).Code(), errors.ErrTheGivenResourceWasNotFound)
+}
+
 func (suite *RepositoryTestSuite) TestDeleteWhisperModel() {
 	whisper := WhisperModel{
 		Name: "test",
@@ -146,6 +156,11 @@ func (suite *RepositoryTestSuite) TestDeleteWhisperModel() {
 	get, err := suite.repo.GetById(*create.Id)
 	assert.Nil(suite.T(), get)
 	assert.NotNil(suite.T(), err)
+}
+
+func (suite *RepositoryTestSuite) TestDeleteWhisperModelNotExist() {
+	err := suite.repo.Delete(idNotExist)
+	assert.Equal(suite.T(), err.(*errors.DocumentNotFound).Code(), errors.ErrTheGivenResourceWasNotFound)
 }
 
 func (suite *RepositoryTestSuite) TestUpdateWhisperModel() {
@@ -173,6 +188,26 @@ func (suite *RepositoryTestSuite) TestUpdateWhisperModel() {
 	assert.NotNil(suite.T(), update)
 	assert.Equal(suite.T(), whisper.Name, update.Name)
 	assert.NotEmpty(suite.T(), update.Id)
+}
+
+func (suite *RepositoryTestSuite) TestUpdateWhisperModelNotExist() {
+	whisper := WhisperModel{
+		Name: "test",
+		FileUrl: []ModelFile{
+			{
+				Url:           "test",
+				Name:          "test",
+				IsCoreMLModel: false,
+			},
+		},
+	}
+
+	whisper.Name = "test2"
+	update, err := suite.repo.Update(idNotExist, whisper)
+
+	assert.Equal(suite.T(), err.(*errors.DocumentNotFound).Code(), errors.ErrTheGivenResourceWasNotFound)
+	assert.NotNil(suite.T(), err)
+	assert.Nil(suite.T(), update)
 }
 
 func TestRepositoryTestSuite(t *testing.T) {

@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"personal-assistant/internal/config/constants/keys"
 	"personal-assistant/internal/repositories"
+	"personal-assistant/pkgs/errors"
 )
 
 type WhisperModel struct {
@@ -95,6 +96,9 @@ func (r *WhisperRepository) GetById(id string) (*WhisperModel, error) {
 
 	err = r.whisperCollection.FindOne(context.TODO(), bson.M{"_id": objectId}).Decode(&whisper)
 	if err != nil {
+		if err.Error() == "mongo: no documents in result" {
+			return nil, errors.NewDocumentNotFound()
+		}
 		return nil, err
 	}
 
@@ -107,7 +111,10 @@ func (r *WhisperRepository) Delete(id string) error {
 	if err != nil {
 		return err
 	}
-	_, err = r.whisperCollection.DeleteOne(context.TODO(), bson.M{"_id": objectId})
+	result, err := r.whisperCollection.DeleteOne(context.TODO(), bson.M{"_id": objectId})
+	if result.DeletedCount == 0 {
+		return errors.NewDocumentNotFound()
+	}
 	return err
 }
 
@@ -117,9 +124,13 @@ func (r *WhisperRepository) Update(id string, whisper WhisperModel) (*WhisperMod
 	if err != nil {
 		return nil, err
 	}
-	_, err = r.whisperCollection.ReplaceOne(context.TODO(), bson.M{"_id": objectId}, whisper)
+	result, err := r.whisperCollection.ReplaceOne(context.TODO(), bson.M{"_id": objectId}, whisper)
 	if err != nil {
 		return nil, err
+	}
+
+	if result.MatchedCount == 0 {
+		return nil, errors.NewDocumentNotFound()
 	}
 
 	whisper.Id = &id
