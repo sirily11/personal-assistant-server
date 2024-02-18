@@ -15,6 +15,7 @@ type WhisperModel struct {
 	Id          *string     `json:"id" bson:"_id,omitempty"`
 	Name        string      `json:"name" bson:"name" binding:"required"`
 	Description string      `json:"description" bson:"description,omitempty"`
+	Size        int64       `json:"size" bson:"size" binding:"required"`
 	FileUrl     []ModelFile `json:"fileUrl" binding:"required" bson:"fileUrl"`
 }
 
